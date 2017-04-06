@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"ember-websockets",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "ember-websockets",
+    "description": "api documentation for [ember-websockets (v7.0.2)](https://github.com/thoov/ember-websockets#readme) [![npm package](https://img.shields.io/npm/v/npmdoc-ember-websockets.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-ember-websockets) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-ember-websockets.svg)](https://travis-ci.org/npmdoc/node-npmdoc-ember-websockets)",
     "devDependencies": {
-        "ember-websockets": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "ember-websockets": "*",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-ember-websockets",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-ember-websockets",
+    "keywords": [
+        "documentation",
+        "ember-websockets"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_ember_websockets.js",
+    "name": "npmdoc-ember-websockets",
+    "nameAlias": "npmdoc_ember_websockets",
+    "nameOriginal": "npmdoc-ember-websockets",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-ember-websockets"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
     "version": "0.0.1"
 }
