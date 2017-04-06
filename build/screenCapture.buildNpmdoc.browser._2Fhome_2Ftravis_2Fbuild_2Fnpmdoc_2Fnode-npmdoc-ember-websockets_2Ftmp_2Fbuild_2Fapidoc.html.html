@@ -1,0 +1,341 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/thoov/ember-websockets#readme">ember-websockets (v7.0.2)</a>
+</h1>
+<h4>EmberJS WebSockets addon for Ember-CLI apps.</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.ember-websockets">module ember-websockets</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ember-websockets._isFastbootBuild">
+            function <span class="apidocSignatureSpan">ember-websockets.</span>_isFastbootBuild
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ember-websockets._readConfig">
+            function <span class="apidocSignatureSpan">ember-websockets.</span>_readConfig
+            <span class="apidocSignatureSpan">(environment)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ember-websockets._readConfigProp">
+            function <span class="apidocSignatureSpan">ember-websockets.</span>_readConfigProp
+            <span class="apidocSignatureSpan">(prop)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ember-websockets._shimImport">
+            function <span class="apidocSignatureSpan">ember-websockets.</span>_shimImport
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ember-websockets.included">
+            function <span class="apidocSignatureSpan">ember-websockets.</span>included
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.ember-websockets.treeForVendor">
+            function <span class="apidocSignatureSpan">ember-websockets.</span>treeForVendor
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">ember-websockets.</span>name</span>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.ember-websockets" id="apidoc.module.ember-websockets">module ember-websockets</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.ember-websockets._isFastbootBuild" id="apidoc.element.ember-websockets._isFastbootBuild">
+        function <span class="apidocSignatureSpan">ember-websockets.</span>_isFastbootBuild
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_isFastbootBuild() {
+  return !!process.env.EMBER_CLI_FASTBOOT;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+module.exports = {
+name: 'ember-websockets',
+
+included() {
+  this._super.included.apply(this, arguments);
+  this._shimImport();
+
+  if (!this.<span class="apidocCodeKeywordSpan">_isFastbootBuild</span>()) {
+    this.import(`vendor/${this.name}/urijs/URI.min.js`);
+
+    if (this._readConfigProp('socketIO') === true) {
+      this.import(`vendor/${this.name}/socket.io-client/socket.io.min.js`);
+    }
+  }
+},
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.ember-websockets._readConfig" id="apidoc.element.ember-websockets._readConfig">
+        function <span class="apidocSignatureSpan">ember-websockets.</span>_readConfig
+        <span class="apidocSignatureSpan">(environment)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_readConfig(environment) {
+  const project = this.app.project;
+
+  // NOTE: For ember-cli &gt;= 2.6.0-beta.3, project.configPath() returns absolute path
+  // while older ember-cli versions return path relative to project root
+  const configPath = path.dirname(project.configPath());
+  let config = path.join(configPath, 'environment.js');
+
+  if (!path.isAbsolute(config)) {
+    config = path.join(project.root, config);
+  }
+
+  if (exists(config)) {
+    return require(config)(environment);
+  }
+
+  return {
+    'ember-websockets': {}
+  };
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  return {
+    'ember-websockets': {}
+  };
+},
+
+_readConfigProp(prop) {
+  this._shimImport();
+  const config = this.<span class="apidocCodeKeywordSpan">_readConfig</span>(this._findHost().env);
+
+  if (config['ember-websockets'] &amp;&amp; config['ember-websockets'][prop]) {
+    return config['ember-websockets'][prop];
+  }
+},
+
+_isFastbootBuild() {
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.ember-websockets._readConfigProp" id="apidoc.element.ember-websockets._readConfigProp">
+        function <span class="apidocSignatureSpan">ember-websockets.</span>_readConfigProp
+        <span class="apidocSignatureSpan">(prop)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_readConfigProp(prop) {
+  this._shimImport();
+  const config = this._readConfig(this._findHost().env);
+
+  if (config['ember-websockets'] &amp;&amp; config['ember-websockets'][prop]) {
+    return config['ember-websockets'][prop];
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+included() {
+  this._super.included.apply(this, arguments);
+  this._shimImport();
+
+  if (!this._isFastbootBuild()) {
+    this.import(`vendor/${this.name}/urijs/URI.min.js`);
+
+    if (this.<span class="apidocCodeKeywordSpan">_readConfigProp</span>('socketIO') === true) {
+      this.import(`vendor/${this.name}/socket.io-client/socket.io.min.js`);
+    }
+  }
+},
+
+treeForVendor() {
+  const urijsPath = require.resolve('urijs');
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.ember-websockets._shimImport" id="apidoc.element.ember-websockets._shimImport">
+        function <span class="apidocSignatureSpan">ember-websockets.</span>_shimImport
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_shimImport() {
+  if (!this.import) {
+    this._findHost = function findHostShim() {
+      let current = this;
+      let app;
+      do {
+        app = current.app || app;
+      } while (current.parent.parent &amp;&amp; (current = current.parent));
+      return app;
+    };
+    this.import = function importShim(asset, options) {
+      const app = this._findHost();
+      app.import(asset, options);
+    };
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+const Merge = require('broccoli-merge-trees');
+
+module.exports = {
+  name: 'ember-websockets',
+
+  included() {
+    this._super.included.apply(this, arguments);
+    this.<span class="apidocCodeKeywordSpan">_shimImport</span>();
+
+    if (!this._isFastbootBuild()) {
+this.import(`vendor/${this.name}/urijs/URI.min.js`);
+
+if (this._readConfigProp('socketIO') === true) {
+  this.import(`vendor/${this.name}/socket.io-client/socket.io.min.js`);
+}
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.ember-websockets.included" id="apidoc.element.ember-websockets.included">
+        function <span class="apidocSignatureSpan">ember-websockets.</span>included
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">included() {
+  this._super.included.apply(this, arguments);
+  this._shimImport();
+
+  if (!this._isFastbootBuild()) {
+    this.import(`vendor/${this.name}/urijs/URI.min.js`);
+
+    if (this._readConfigProp('socketIO') === true) {
+      this.import(`vendor/${this.name}/socket.io-client/socket.io.min.js`);
+    }
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.ember-websockets.treeForVendor" id="apidoc.element.ember-websockets.treeForVendor">
+        function <span class="apidocSignatureSpan">ember-websockets.</span>treeForVendor
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">treeForVendor() {
+  const urijsPath = require.resolve('urijs');
+  const mockSocketPath = require.resolve('mock-socket');
+  const socketIOClientPath = require.resolve('socket.io-client');
+
+  return new Merge([
+    new Funnel(__dirname + '/vendor', { destDir: this.name }),
+    new Funnel(path.dirname(urijsPath), { destDir: this.name + '/urijs' }),
+    new Funnel(path.dirname(mockSocketPath), { destDir: this.name + '/mock-socket' }),
+    new Funnel(path.join(path.dirname(socketIOClientPath), '../dist'), { destDir: this.name + '/socket.io-client' })
+  ]);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
